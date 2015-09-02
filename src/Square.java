@@ -1,35 +1,46 @@
 import java.awt.*;
 
-class Square{
+public class Square{
+    private static final int DEFAULT_X = 0;
 
-    private int xPos = 0;
-    private int yPos = 0;
-    private int width = 40;
-    private int height = 20;
+    private static final int DEFAULT_Y = 0;
+
+    private static final int DEFAULT_WIDTH = 40;
+
+    private static final int DEFAULT_HEIGHT = 40;
+
+    private int _xPos = 0;
+
+    private int _yPos = 0;
+
+    private int _width = DEFAULT_WIDTH;
+
+    private int _height = DEFAULT_HEIGHT;
+
     private Color color = Color.RED;
 
     public void setX(int xPos){
-        this.xPos = xPos;
+        _xPos = xPos;
     }
 
     public int getX(){
-        return xPos;
+        return _xPos;
     }
 
     public void setY(int yPos){
-        this.yPos = yPos;
+        _yPos = yPos;
     }
 
     public int getY(){
-        return yPos;
+        return _yPos;
     }
 
     public int getWidth(){
-        return width;
+        return _width;
     }
 
     public int getHeight(){
-        return height;
+        return _height;
     }
 
     public Color getColor() {
@@ -42,8 +53,8 @@ class Square{
 
     public void paintSquare(Graphics g){
         g.setColor(color);
-        g.fillRect(xPos,yPos,width,height);
+        g.fillRect(_xPos, _yPos, _width, _height);
         g.setColor(Color.BLACK);
-        g.drawRect(xPos,yPos,width,height);
+        g.drawRect(_xPos, _yPos, _width, _height);
     }
 }

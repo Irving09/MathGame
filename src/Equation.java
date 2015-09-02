@@ -35,8 +35,7 @@ public class Equation {
         return height;
     }
 
-    private void moveSquare(){
-
+    private void moveSquare() {
         final int CURR_X = getX();
         final int CURR_Y = getY();
         final int CURR_W = getWidth();
@@ -44,7 +43,6 @@ public class Equation {
 
         //setX(x);
         setY(CURR_Y - 20);
-
     }
 
     public void display(Graphics g){
