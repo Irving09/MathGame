@@ -2,29 +2,28 @@ import java.awt.*;
 
 
 public class Equation {
-    String equations1 = "8 * 8";
-
-    private int xPos = 375;
-    private int yPos = 600;
-    private int width = 20;
-    private int height = 20;
     private static final int WIDTH = 400;
     private static final int HEIGHT = 600;
 
+    private int _xPos = 375;
+    private int _yPos = 600;
+    private int width = 20;
+    private int height = 20;
+
     public void setX(int xPos){
-        this.xPos = xPos;
+        _xPos = xPos;
     }
 
     public int getX(){
-        return xPos;
+        return _xPos;
     }
 
     public void setY(int yPos){
-        this.yPos = yPos;
+        _yPos = yPos;
     }
 
     public int getY(){
-        return yPos;
+        return _yPos;
     }
 
     public int getWidth(){
@@ -35,7 +34,7 @@ public class Equation {
         return height;
     }
 
-    private void moveSquare() {
+    public void moveSquare() {
         final int CURR_X = getX();
         final int CURR_Y = getY();
         final int CURR_W = getWidth();
@@ -43,10 +42,5 @@ public class Equation {
 
         //setX(x);
         setY(CURR_Y - 20);
-    }
-
-    public void display(Graphics g){
-        moveSquare();
-        g.drawString(equations1,xPos ,yPos);
     }
 }

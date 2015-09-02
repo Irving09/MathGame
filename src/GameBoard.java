@@ -1,66 +1,64 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
-import java.awt.event.*;
 
-class GameBoard extends JPanel {
+public class GameBoard extends JPanel {
+    private static final int DEFAULT_ROWS = 28;
+    private static final int DEFAULT_COLUMNS = 10;
+    private static final int WINDOW_WIDTH = 420;
+    private static final int WINDOW_HEIGHT = 600;
 
-
-    private static final int WIDTH = 420;
-    private static final int HEIGHT = 600;
-    private int nRows = 28;
-    private int nColumns = 10;
+    private int nRows;
+    private int nColumns;
     private int squareW = 40;
     private int squareH = 20;
     private int squareSeparation = 1;
     private int squareYSeparation = 1;
     Random ran = new Random(System.currentTimeMillis());
-    private Equation equation = new Equation();
+    private Equation _equation = new Equation();
     private long time = System.currentTimeMillis();
-    Square [] squares = new Square[nRows*nColumns];
 
     public GameBoard() {
-        setBorder(BorderFactory.createLineBorder(Color.black));
+        this(DEFAULT_ROWS, DEFAULT_COLUMNS);
     }
 
-
+    public GameBoard(int numRows, int numColumns) {
+        nRows  = numRows;
+        nColumns = numColumns;
+    }
 
     public Dimension getPreferredSize() {
-        return new Dimension(WIDTH,HEIGHT);
+        return new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        drawSquares();
+        Square[] squares = createSquares();
         for(Square s : squares)
         {
             s.paintSquare(g);
         }
-        if(5000 > System.currentTimeMillis() - time ) {
-            equation.display(g);
-            time = System.currentTimeMillis();
-        }
-
+        _equation.moveSquare();
+        g.drawString("Equation", _equation.getX(), _equation.getY());
+        time = System.currentTimeMillis();
     }
 
-    public void drawSquares()
+    public Square[] createSquares()
     {
-        for(int r = 0; r < nColumns; r++)
-        {
-            for(int c=0; c < nRows; c++)
-            {
-                int x = squareSeparation*(r) + (squareW *r)+4;
-                int y = squareYSeparation + (squareH * c)+squareSeparation*c;
+        Square[] squares = new Square[nRows*nColumns];
+        for(int col = 0; col < nColumns; col++) {
+            for(int row=0; row < nRows; row++) {
+                int x = col + squareW * col;
+                int y = squareH * row + row;
 
-                //	draw a single brick
-                drawSquare(x, y, r ,c);
-
+                //	create a single brick
+                createSquare(x, y, col, row, squares);
             }
         }
+        return squares;
     }
 
-    public void drawSquare(int x, int y, int r, int c)
-    {
+    public void createSquare(int x, int y, int r, int c, Square[] squares) {
         Square square = new Square();
         square.setX(x);
         square.setY(y);
