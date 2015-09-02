@@ -6,11 +6,11 @@ import java.awt.event.*;
 class GameBoard extends JPanel {
 
 
-    private static final int WIDTH = 400;
+    private static final int WIDTH = 420;
     private static final int HEIGHT = 600;
-    private int nRows = 30;
+    private int nRows = 28;
     private int nColumns = 10;
-    private int squareW = 20;
+    private int squareW = 40;
     private int squareH = 20;
     private int squareSeparation = 1;
     private int squareYSeparation = 1;
@@ -45,9 +45,9 @@ class GameBoard extends JPanel {
 
     public void drawSquares()
     {
-        for(int r = 0; r < nRows; r++)
+        for(int r = 0; r < nColumns; r++)
         {
-            for(int c=0; c < nColumns; c++)
+            for(int c=0; c < nRows; c++)
             {
                 int x = squareSeparation*(r) + (squareW *r)+4;
                 int y = squareYSeparation + (squareH * c)+squareSeparation*c;
@@ -65,10 +65,9 @@ class GameBoard extends JPanel {
         square.setX(x);
         square.setY(y);
 
-        Color [] clr = {Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN,
-                Color.CYAN};
+        Color [] clr = {Color.white};
 
-        square.setColor(clr[ran.nextInt(5)]);
-        squares[c + (r * nColumns)] = square;
+        square.setColor(clr[ran.nextInt(1)]);
+        squares[c + (r * nRows)] = square;
     }
 }

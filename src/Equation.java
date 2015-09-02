@@ -5,7 +5,7 @@ public class Equation {
     String equations1 = "8 * 8";
 
     private int xPos = 375;
-    private int yPos = 575;
+    private int yPos = 600;
     private int width = 20;
     private int height = 20;
     private static final int WIDTH = 400;

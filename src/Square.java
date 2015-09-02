@@ -4,7 +4,7 @@ class Square{
 
     private int xPos = 0;
     private int yPos = 0;
-    private int width = 20;
+    private int width = 40;
     private int height = 20;
     private Color color = Color.RED;
 
