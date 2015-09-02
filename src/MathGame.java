@@ -3,6 +3,10 @@
  * MathGame.java requires no other files.
  */
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class MathGame {
 
@@ -26,9 +30,51 @@ public class MathGame {
         frame.getContentPane().add(label);
 
         //frame size
-        frame.setSize(WIDTH , HEIGHT);
+        frame.setSize(WIDTH, HEIGHT);
 
         frame.add(new GameBoard());
+        JTextField txtField = new JTextField();
+        txtField.setHorizontalAlignment(JTextField.RIGHT);
+        txtField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    txtField.setText("");
+
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
+        txtField.setFocusable(true);
+        frame.getContentPane().add(txtField, BorderLayout.SOUTH);
+
+        frame.addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyPressed(KeyEvent e){
+                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    txtField.setText("");
+
+                }
+            }
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         //Display the window.
         frame.pack();
