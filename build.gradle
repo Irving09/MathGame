@@ -1,0 +1,30 @@
+apply plugin: 'java'
+
+// running 'gradle' from a console will run clean, then build
+defaultTasks 'clean', 'build'
+
+repositories {
+    mavenCentral()
+}
+// JARs that are needed at runtime, but not bundled into the WAR file
+List providedRuntimeLibs = [
+
+]
+
+// JARs that are needed at compile time, but not bundled into the WAR file
+List providedCompileLibs = [
+       // files { file('src').listFiles() }
+]
+
+dependencies {
+    //providedCompile providedCompileLibs
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+    }
+}
+
