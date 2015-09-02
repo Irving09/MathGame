@@ -39,7 +39,7 @@ public class GameBoard extends JPanel {
             s.paintSquare(g);
         }
         _equation.moveSquare();
-        g.drawString("Equation", _equation.getX(), _equation.getY());
+        g.drawString(_equation.getQuestion(), _equation.getX(), _equation.getY());
         time = System.currentTimeMillis();
     }
 
@@ -67,5 +67,10 @@ public class GameBoard extends JPanel {
 
         square.setColor(clr[ran.nextInt(1)]);
         squares[c + (r * nRows)] = square;
+    }
+
+    public Equation getEquation()
+    {
+        return _equation;
     }
 }
