@@ -3,6 +3,8 @@
  * MathGame.java requires no other files.
  */
 import javax.swing.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MathGame {
 
@@ -15,6 +17,15 @@ public class MathGame {
     private static int squareW= 20;
     private static int squareH= 20;
     private static JFrame frame;
+    private Timer _timer;
+
+    public MathGame() {
+        _timer = new Timer();
+    }
+
+    public void start() {
+        createAndShowGUI();
+    }
 
     private static void createAndShowGUI() {
         //Create and set up the window.
@@ -36,13 +47,10 @@ public class MathGame {
     }
 
     public static void main(String[] args) {
+        MathGame game = new MathGame();
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI();
-            }
-        });
+        SwingUtilities.invokeLater(() -> game.start());
     }
 
     public static void drawSquare() {
