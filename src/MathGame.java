@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class MathGame {
 
-    private static final int WIDTH = 400;
+    private static final int WIDTH = 420;
     private static final int HEIGHT = 600;
     private static final int nSquarePerRow = 20;
     private static final int nRow = 30;
