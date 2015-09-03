@@ -6,10 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MathGame {
     private static final int WIDTH = 420;
@@ -21,20 +17,20 @@ public class MathGame {
     private static int squareW= 20;
     private static int squareH= 20;
     private static JFrame frame;
-    private GameBoard gb;
+    private GameBoard game;
     private JTextField txtField;
+
+    public MathGame() {
+        game = new GameBoard();
+    }
 
     public void start() {
         createAndShowGUI();
     }
 
     private void createAndShowGUI() {
-        GameBoard game = new GameBoard();
-        //Create and set up the window.
         frame = new JFrame("MathGame");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        //Add the ubiquitous "Hello World" label.
         JLabel label = new JLabel("Hello World");
         frame.getContentPane().add(label);
 
@@ -51,8 +47,16 @@ public class MathGame {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    System.out.println(txtField.getText());
-                    txtField.setText(gb.getEquation().toString());
+                    boolean isCorrect = validateInput(txtField.getText().trim());
+                    if (isCorrect) {
+                        // remove the equation from the game's list &&
+                        // assign a new random equation from the game's list of equation
+                        game.replaceCurrentEquation();
+                        System.out.println("Correct!");
+                    } else {
+                        System.out.println("Wrong!");
+                    }
+                    System.out.println("Equations Left: " + game.getNumberOfEquations());
                 }
             }
 
@@ -67,18 +71,8 @@ public class MathGame {
         frame.setVisible(true);
     }
 
-    public void validateInput(String input){
-        Equation equation = gb.getEquation();
-        try {
-            if(equation.getAnswerAsInt() == Integer.parseInt(input)) {
-                System.out.println("Correct!");
-            } else {
-                System.out.println("Wrong!");
-            }
-        }
-        catch(Exception e) {
-            System.out.println("Wrong format");
-        }
+    public boolean validateInput(final String input){
+        return game.getCurrentAnswerAsString().equals(input);
     }
 
     public static void main(final String... args) {

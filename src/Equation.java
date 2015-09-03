@@ -19,6 +19,10 @@ public class Equation {
         return _answer;
     }
 
+    public String getAnswerAsString() {
+        return Integer.toString(_answer);
+    }
+
     public int getY() {
         return _y;
     }
@@ -29,5 +33,9 @@ public class Equation {
 
     public void moveUp() {
         _y++;
+    }
+
+    public String toString() {
+        return _equation + " : " + _answer;
     }
 }
