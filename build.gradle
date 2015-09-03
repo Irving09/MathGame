@@ -18,6 +18,8 @@ List providedCompileLibs = [
 
 dependencies {
     //providedCompile providedCompileLibs
+    compile 'org.apache.httpcomponents:httpclient:4.5'
+    compile 'org.apache.httpcomponents:httpmime:4.5'
 }
 
 sourceSets {
@@ -27,4 +29,3 @@ sourceSets {
         }
     }
 }
-
