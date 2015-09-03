@@ -41,14 +41,14 @@ public class MathGame {
                     boolean isCorrect = validateInput(_txtField.getText().trim());
                     if (isCorrect) {
                         _game.replaceCurrentEquation();
-                        if (_game.getNumberOfEquations() > 0) {
-                            _game.incrementScore();
-                        }
+                        _game.incrementScore();
                         System.out.println("Correct!");
                         System.out.println(_game.currentScore());
 
                     } else {
                         System.out.println("Wrong!");
+                        System.out.println(_game.currentScore());
+
                     }
                     _txtField.setText("");
                 }
