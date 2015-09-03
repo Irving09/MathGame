@@ -1,13 +1,13 @@
 import java.awt.*;
 
 public class Square{
+    public static final int DEFAULT_WIDTH = 40;
+
+    public static final int DEFAULT_HEIGHT = 40;
+
     private static final int DEFAULT_X = 0;
 
     private static final int DEFAULT_Y = 0;
-
-    private static final int DEFAULT_WIDTH = 40;
-
-    private static final int DEFAULT_HEIGHT = 40;
 
     private int _xPos = 0;
 

@@ -26,6 +26,7 @@ public class MathGame {
     }
 
     private static void createAndShowGUI() {
+        GameBoard game = new GameBoard();
         //Create and set up the window.
         frame = new JFrame("MathGame");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,9 +36,7 @@ public class MathGame {
         frame.getContentPane().add(label);
 
         //frame size
-        frame.setSize(WIDTH, HEIGHT);
-
-        frame.add(new GameBoard());
+        frame.add(game);
         JTextField txtField = new JTextField();
         txtField.setHorizontalAlignment(JTextField.RIGHT);
         txtField.addKeyListener(new KeyListener() {
@@ -65,16 +64,18 @@ public class MathGame {
         frame.addKeyListener(new KeyListener() {
 
             @Override
-            public void keyPressed(KeyEvent e){
-                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     txtField.setText("");
 
                 }
             }
+
             @Override
             public void keyTyped(KeyEvent e) {
 
             }
+
             @Override
             public void keyReleased(KeyEvent e) {
 
@@ -88,8 +89,6 @@ public class MathGame {
 
     public static void main(String... args) {
         MathGame game = new MathGame();
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
         SwingUtilities.invokeLater(() -> game.start());
     }
 
