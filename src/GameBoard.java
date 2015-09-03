@@ -4,7 +4,6 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.util.*;
-import java.util.List;
 import java.util.Timer;
 
 public class GameBoard extends JPanel {
@@ -24,7 +23,7 @@ public class GameBoard extends JPanel {
     private Equation _currentEquation;
     private Timer _timer;
     Equation _equations = new Equation();
-    GameStatus gameStatus;
+    GameStatus gameStatus = new GameStatus();
 
     public GameBoard() {
         this(DEFAULT_ROWS, DEFAULT_COLUMNS);
@@ -37,7 +36,7 @@ public class GameBoard extends JPanel {
         _squareW = Square.DEFAULT_WIDTH;
         _boardWidth = _nColumns * _squareW;
         _boardHeight = _nRows * _squareH;
-        _currentEquation = _equations.generateEquation();
+        _currentEquation = _equations.generateEquation(gameStatus.getLvl());
         gameStatus = new GameStatus(_currentEquation);
         _speed = DEFAULT_SPEED_IN_SECONDS;
         _currentScore = 0;
@@ -54,6 +53,7 @@ public class GameBoard extends JPanel {
         drawGrid(g);
         drawEquation(g, _currentEquation.getX(), _currentEquation.getY());
         drawScore(g, 0, 0);
+        drawLevel(g);
         if(gameStatus.HasEquationReachTheTop(_nRows)){
             drawYourScore(g);
             _timer.cancel();
@@ -74,10 +74,9 @@ public class GameBoard extends JPanel {
         Font f = new Font("Helvetica", 1, 40);
         String s = new String("YOU SCORE: ");
         TextLayout textTl = new TextLayout(s, f, frc);
-        AffineTransform transform = new AffineTransform();
         Shape outline = textTl.getOutline(null);
         Rectangle outlineBounds = outline.getBounds();
-        transform = g2.getTransform();
+        AffineTransform transform = g2.getTransform();
         transform.translate(_boardWidth / 2 - (outlineBounds.width / 2), _boardHeight / 2
                 + (outlineBounds.height / 2));
         g2.transform(transform);
@@ -85,7 +84,6 @@ public class GameBoard extends JPanel {
         g2.draw(outline);
         TextLayout textTl2 = new TextLayout("" + _currentScore, f, frc);
         Shape outline2 = textTl2.getOutline(null);
-        //outline2.getBounds2D().setRect(1, 50, outline2.getBounds2D().getWidth(), outline2.getBounds2D().getHeight());
         transform.translate(_boardWidth/2, 40);
         g2.setTransform(transform);
         g2.draw(outline2);
@@ -108,7 +106,12 @@ public class GameBoard extends JPanel {
 
     public void drawScore(final Graphics g, final int x, final int y) {
         g.setColor(Color.yellow);
-        g.drawString("Score: " + Integer.toString(_currentScore), 45, 20);
+        g.drawString("Score: " + _currentScore, 25, 20);
+    }
+
+    public void drawLevel(final Graphics g) {
+        g.setColor(Color.yellow);
+        g.drawString("Level: " + gameStatus.getLvl(), 25, 40);
     }
 
     public void paintSquare(final int x, final int y, final Graphics canvas) {
@@ -118,34 +121,6 @@ public class GameBoard extends JPanel {
 
         square.setColor(Color.DARK_GRAY);
         square.paintSquare(canvas);
-    }
-
-    public int getRows() {
-        return _nRows;
-    }
-
-    public int getColumns() {
-        return _nColumns;
-    }
-
-    public int getBoardWidth() {
-        return _boardWidth;
-    }
-
-    public int getBoardHeight() {
-        return _boardHeight;
-    }
-
-    public String getCurrentEquationAsString() {
-        return _currentEquation.getEquationAsString();
-    }
-
-    public Equation getCurrentEquation() {
-        return _currentEquation;
-    }
-
-    public int getCurrentAnswerAsInt() {
-        return _currentEquation.getAnswerAsInt();
     }
 
     public String getCurrentAnswerAsString() {
@@ -160,24 +135,8 @@ public class GameBoard extends JPanel {
         return _currentScore;
     }
 
-    public void removeEquationFromListByIndex(final int index) {
-        try {
-            _equations.remove(index);
-        } catch(IndexOutOfBoundsException e) {
-            System.out.println(e);
-        }
-    }
-
-    public void removeEquationFromListByObject(final Equation toBeRemoved) {
-        try {
-            _equations.remove(toBeRemoved);
-        } catch(IndexOutOfBoundsException e) {
-            System.err.println(e.getStackTrace());
-        }
-    }
-
     public void replaceCurrentEquation() {
-        _currentEquation = _equations.generateEquation();
+        _currentEquation = _equations.generateEquation(gameStatus.getLvl());
         gameStatus.setEquation(_currentEquation);
     }
 

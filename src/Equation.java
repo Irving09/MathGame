@@ -21,13 +21,31 @@ public class Equation extends JPanel {
         return _equation;
     }
 
-    public Equation generateEquation() {
-        muliplication();
+    public Equation generateEquation(int lvl) {
+        switch (lvl)
+        {
+            case 1: addition();break;
+            case 2: subtraction();break;
+            case 3: multiplication();break;
+            case 4: division();break;
+            case 5: mix();break;
+            default: quadratic();break;
+        }
         reset();
         return this;
     }
 
-    public void muliplication() {
+    public void mix()
+    {
+        switch (ran.nextInt(4))
+        {
+            case 0:  addition();break;
+            case 1: subtraction();break;
+            case 2: multiplication();break;
+            default: division();break;
+        }
+    }
+    public void multiplication() {
         int a = ran.nextInt(10);
         int b = ran.nextInt(10);
         _answer = a *  b;
@@ -52,20 +70,24 @@ public class Equation extends JPanel {
     }
 
     public void division() {
-        int a = ran.nextInt(10);
-        int b = ran.nextInt(9) +1;
+        int a = ran.nextInt(100);
+        int b = ran.nextInt(99) +1;
+        while(a % b != 0)
+        {
+            a = ran.nextInt(10);
+            b = ran.nextInt(9) +1;
+        }
         _answer = a /  b;
         _equation = a + " / " + b + " = x";
 
     }
 
     public void quadratic() {
-        int a = ran.nextInt(9) + 1;
-        int b = ran.nextInt(10);
-        int c = ran.nextInt(10);
-        _answer = a* (c * c) + b;
-        _equation = a + "(x^2) + " + b + " = " + _answer;
-        _answer = c;
+        int a = ran.nextInt(4) + 1;
+        int b = ran.nextInt(4) + 1;
+        int c = (a*a) + (2*a*b) + (b*b);
+        _equation = "a^2 + " + a*2 + "* a" + " + " + b*b + " = " + c;
+        _answer = a;
     }
 
     public int getAnswerAsInt() {

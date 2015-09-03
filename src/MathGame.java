@@ -54,6 +54,7 @@ public class MathGame {
                         System.out.println(_game.currentScore());
                         progressLevel++;
                         _progressBar.setValue(progressLevel);
+                        _game.gameStatus.checkLevel(progressLevel);
 
                     } else {
                         System.out.println("Wrong!");
