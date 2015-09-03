@@ -107,8 +107,8 @@ public class GameBoard extends JPanel {
     }
 
     public void drawScore(final Graphics g, final int x, final int y) {
-        g.setColor(Color.CYAN);
-        g.drawString(Integer.toString(_currentScore), _boardWidth / 2 - TEXT_OFFSET, _boardHeight - Square.DEFAULT_HEIGHT * y - TEXT_OFFSET);
+        g.setColor(Color.yellow);
+        g.drawString("Score: " + Integer.toString(_currentScore), 45, 20);
     }
 
     public void paintSquare(final int x, final int y, final Graphics canvas) {

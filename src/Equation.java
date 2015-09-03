@@ -35,6 +35,30 @@ public class Equation extends JPanel {
 
     }
 
+    public void addition() {
+        int a = ran.nextInt(10);
+        int b = ran.nextInt(10);
+        _answer = a +  b;
+        _equation = a + " + " + b + " = x";
+
+    }
+
+    public void subtraction() {
+        int a = ran.nextInt(10);
+        int b = ran.nextInt(10);
+        _answer = a -  b;
+        _equation = a + " - " + b + " = x";
+
+    }
+
+    public void division() {
+        int a = ran.nextInt(10);
+        int b = ran.nextInt(9) +1;
+        _answer = a /  b;
+        _equation = a + " / " + b + " = x";
+
+    }
+
     public void quadratic() {
         int a = ran.nextInt(9) + 1;
         int b = ran.nextInt(10);
