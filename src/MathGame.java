@@ -46,10 +46,11 @@ public class MathGame {
                         }
                         System.out.println("Correct!");
                         System.out.println(_game.currentScore());
+
                     } else {
                         System.out.println("Wrong!");
                     }
-                    System.out.println("Equations Left: " + _game.getNumberOfEquations());
+                    _txtField.setText("");
                 }
             }
 

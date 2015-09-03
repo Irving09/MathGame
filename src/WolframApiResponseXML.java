@@ -15,7 +15,7 @@ public class WolframApiResponseXML {
     public WolframApiResponseXML() {
         try {
             _wolframAlphaURL = new URL(DEFAULT_BASE_URL);
-            
+
         } catch(MalformedURLException e) {
             // http://api.wolframalpha.com/v2/query?appid=xxx&input=%60&format=image,plaintext
             System.err.println("URL is malformed: " + url);
