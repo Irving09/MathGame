@@ -8,37 +8,28 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class MathGame {
-    private static final int WIDTH = 420;
-    private static final int HEIGHT = 600;
-    private static final int nSquarePerRow = 20;
-    private static final int nRow = 30;
-    private static final int separate = 20;
-    private static final int yseparate = 20;
-    private static int squareW= 20;
-    private static int squareH= 20;
-    private static JFrame frame;
-    private GameBoard game;
-    private JTextField txtField;
+    private static JFrame _frame;
+    private GameBoard _game;
+    private JTextField _txtField;
 
     public MathGame() {
-        game = new GameBoard();
+        _game = new GameBoard();
+        _txtField = new JTextField();
+        addListeners();
     }
 
     public void start() {
-        createAndShowGUI();
+        _frame = new JFrame("MathGame");
+        _frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        _frame.add(_game);
+        _frame.getContentPane().add(_txtField, BorderLayout.SOUTH);
+        _frame.pack();
+        _frame.setVisible(true);
     }
 
-    private void createAndShowGUI() {
-        frame = new JFrame("MathGame");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        JLabel label = new JLabel("Hello World");
-//        frame.getContentPane().add(label);
-
-        //frame size
-        frame.add(game);
-        JTextField txtField = new JTextField();
-        txtField.setHorizontalAlignment(JTextField.RIGHT);
-        txtField.addKeyListener(new KeyListener() {
+    private void addListeners() {
+        _txtField.setHorizontalAlignment(JTextField.RIGHT);
+        _txtField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
 
@@ -47,18 +38,16 @@ public class MathGame {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    boolean isCorrect = validateInput(txtField.getText().trim());
+                    boolean isCorrect = validateInput(_txtField.getText().trim());
                     if (isCorrect) {
-                        // remove the equation from the game's list &&
-                        // assign a new random equation from the game's list of equation
-                        game.replaceCurrentEquation();
-                        game.incrementScore();
+                        _game.replaceCurrentEquation();
+                        _game.incrementScore();
                         System.out.println("Correct!");
-                        System.out.println(game.currentScore());
+                        System.out.println(_game.currentScore());
                     } else {
                         System.out.println("Wrong!");
                     }
-                    System.out.println("Equations Left: " + game.getNumberOfEquations());
+                    System.out.println("Equations Left: " + _game.getNumberOfEquations());
                 }
             }
 
@@ -67,14 +56,11 @@ public class MathGame {
 
             }
         });
-        txtField.setFocusable(true);
-        frame.getContentPane().add(txtField, BorderLayout.SOUTH);
-        frame.pack();
-        frame.setVisible(true);
+        _txtField.setFocusable(true);
     }
 
     public boolean validateInput(final String input){
-        return game.getCurrentAnswerAsString().equals(input);
+        return _game.getCurrentAnswerAsString().equals(input);
     }
 
     public static void main(final String... args) {
