@@ -1,5 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
+import java.awt.geom.AffineTransform;
 import java.util.*;
 import java.util.List;
 import java.util.Timer;
@@ -8,7 +11,7 @@ public class GameBoard extends JPanel {
     private static final int DEFAULT_ROWS = 20;
     private static final int DEFAULT_COLUMNS = 10;
     private static final int TEXT_OFFSET = 10;
-    private static final int DEFAULT_SPEED_IN_SECONDS = 2;
+    private static final int DEFAULT_SPEED_IN_SECONDS = 1;
 
     private int _nRows;
     private int _nColumns;
@@ -21,6 +24,7 @@ public class GameBoard extends JPanel {
     private List<Equation> _equations;
     private Equation _currentEquation;
     private Timer _timer;
+    GameStatus gameStatus;
 
     public GameBoard() {
         this(DEFAULT_ROWS, DEFAULT_COLUMNS);
@@ -35,6 +39,7 @@ public class GameBoard extends JPanel {
         _boardHeight = _nRows * _squareH;
         _equations = generateDefaultEquations();
         _currentEquation = _equations.get(generateRandomInt());
+        gameStatus = new GameStatus(_currentEquation);
         _speed = DEFAULT_SPEED_IN_SECONDS;
         _currentScore = 0;
         _timer = new Timer();
@@ -69,6 +74,43 @@ public class GameBoard extends JPanel {
         drawGrid(g);
         drawEquation(g, _currentEquation.getX(), _currentEquation.getY());
         drawScore(g, 0, 0);
+        if(gameStatus.HasEquationReachTheTop(_nRows)){
+            drawYourScore(g);
+            _timer.cancel();
+        }
+    }
+
+    public void drawYourScore(Graphics g)
+    {
+        Graphics2D g2 = (Graphics2D) g;
+
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+
+        g2.setRenderingHint(RenderingHints.KEY_RENDERING,
+                RenderingHints.VALUE_RENDER_QUALITY);
+
+        FontRenderContext frc = g2.getFontRenderContext();
+        Font f = new Font("Helvetica", 1, 40);
+        String s = new String("YOU SCORE: ");
+        TextLayout textTl = new TextLayout(s, f, frc);
+        AffineTransform transform = new AffineTransform();
+        Shape outline = textTl.getOutline(null);
+        Rectangle outlineBounds = outline.getBounds();
+        transform = g2.getTransform();
+        transform.translate(_boardWidth / 2 - (outlineBounds.width / 2), _boardHeight / 2
+                + (outlineBounds.height / 2));
+        g2.transform(transform);
+        g2.setColor(Color.red);
+        g2.draw(outline);
+        TextLayout textTl2 = new TextLayout("" + _currentScore, f, frc);
+        Shape outline2 = textTl2.getOutline(null);
+        //outline2.getBounds2D().setRect(1, 50, outline2.getBounds2D().getWidth(), outline2.getBounds2D().getHeight());
+        transform.translate(_boardWidth/2, 40);
+        g2.setTransform(transform);
+        g2.draw(outline2);
+        g2.setClip(outline);
+        g2.setClip(outline2);
     }
 
     private void drawGrid(final Graphics g) {
@@ -164,6 +206,7 @@ public class GameBoard extends JPanel {
         removeCurrentEquationFromList();
         if (!_equations.isEmpty()) {
             _currentEquation = _equations.get(generateRandomInt());
+            gameStatus.setEquation(_currentEquation);
         }
     }
 
