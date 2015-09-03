@@ -2,6 +2,8 @@ import java.awt.*;
 
 
 public class Equation {
+    String equations [] = new String[1];
+    int answers [] = new int[1];
     private static final int WIDTH = 400;
     private static final int HEIGHT = 600;
 
@@ -9,6 +11,19 @@ public class Equation {
     private int _yPos = 600;
     private int width = 20;
     private int height = 20;
+
+    public Equation(){
+        equations[0] = "8 * 8";
+        answers[0] = 64;
+    }
+
+    public String getQuestion() {
+        return equations[0];
+    }
+
+    public int getAnswer() {
+        return answers[0];
+    }
 
     public void setX(int xPos){
         _xPos = xPos;

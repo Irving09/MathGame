@@ -20,12 +20,14 @@ public class MathGame {
     private static int squareW= 20;
     private static int squareH= 20;
     private static JFrame frame;
+    private GameBoard gb;
+    private JTextField txtField;
 
     public void start() {
         createAndShowGUI();
     }
 
-    private static void createAndShowGUI() {
+    private void createAndShowGUI() {
         GameBoard game = new GameBoard();
         //Create and set up the window.
         frame = new JFrame("MathGame");
@@ -48,6 +50,7 @@ public class MathGame {
             @Override
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    validateInput(txtField.getText());
                     txtField.setText("");
 
                 }
@@ -64,8 +67,12 @@ public class MathGame {
         frame.addKeyListener(new KeyListener() {
 
             @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            public void keyPressed(KeyEvent e){
+                /* Restrict input to only integers */
+
+
+                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    validateInput(txtField.getText());
                     txtField.setText("");
 
                 }
@@ -105,6 +112,26 @@ public class MathGame {
 
             }
         }
+    }
+
+    public void validateInput(String input){
+        Equation equation = gb.getEquation();
+        try {
+            if(equation.getAnswer() == Integer.parseInt(input))
+            {
+
+            }
+            else
+            {
+                System.out.println("YOU LOSE");
+            }
+        }
+        catch(Exception e)
+        {
+            System.out.println("YOU LOSE");
+        }
+
+
     }
 /*
     public static void drawSingleBrick(int x, int y)
