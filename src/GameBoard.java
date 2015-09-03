@@ -21,9 +21,9 @@ public class GameBoard extends JPanel {
     private int _squareH;
     private int _speed;
     private int _currentScore;
-    private List<Equation> _equations;
     private Equation _currentEquation;
     private Timer _timer;
+    Equation _equations = new Equation();
     GameStatus gameStatus;
 
     public GameBoard() {
@@ -37,17 +37,12 @@ public class GameBoard extends JPanel {
         _squareW = Square.DEFAULT_WIDTH;
         _boardWidth = _nColumns * _squareW;
         _boardHeight = _nRows * _squareH;
-        _equations = generateDefaultEquations();
-        _currentEquation = _equations.get(generateRandomInt());
+        _currentEquation = _equations.generateEquation();
         gameStatus = new GameStatus(_currentEquation);
         _speed = DEFAULT_SPEED_IN_SECONDS;
         _currentScore = 0;
         _timer = new Timer();
         _timer.schedule(new MovingTask(), 0, _speed * 1000);
-    }
-
-    private int generateRandomInt() {
-        return new Random().nextInt(_equations.size()) % _equations.size();
     }
 
     public Dimension getPreferredSize() {
@@ -196,22 +191,9 @@ public class GameBoard extends JPanel {
         }
     }
 
-    private void removeCurrentEquationFromList() {
-        if (_equations.contains(_currentEquation)) {
-            _equations.remove(_currentEquation);
-        }
-    }
-
     public void replaceCurrentEquation() {
-        removeCurrentEquationFromList();
-        if (!_equations.isEmpty()) {
-            _currentEquation = _equations.get(generateRandomInt());
-            gameStatus.setEquation(_currentEquation);
-        }
-    }
-
-    public int getNumberOfEquations() {
-        return _equations.size();
+        _currentEquation = _equations.generateEquation();
+        gameStatus.setEquation(_currentEquation);
     }
 
     public String toString() {

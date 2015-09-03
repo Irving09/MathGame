@@ -44,12 +44,11 @@ public class MathGame {
                         _game.incrementScore();
                         System.out.println("Correct!");
                         System.out.println(_game.currentScore());
-                        _txtField.setText("");
+
                     } else {
                         System.out.println("Wrong!");
                     }
-                    System.out.println("Equations Left: " + _game.getNumberOfEquations());
-
+                    _txtField.setText("");
                 }
             }
 
