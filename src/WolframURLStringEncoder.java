@@ -7,24 +7,40 @@ import java.util.Map;
  * Created by inno.estrera on 9/3/15.
  */
 public class WolframURLStringEncoder {
-    private URL _urlToConvert;
     private static final Map<String, String> _operators = new HashMap<String, String>();
-    private String _convertedUrl;
     public static final String DEFAULT_BASE_URL = "http://api.wolframalpha.com/v2/query?";
     public static final String DEFAULT_APP_ID = "R964JH-TQJX26P7Y5";
+    public static final String DEFAULT_URL_OUTPUT_FORMAT = "&format=image,plaintext";
 
-    public WolframURLStringEncoder(final String inputUrl) {
-        initializeUrlObject(inputUrl);
+    private String _wolframUrl;
+    private String _userInput;
+    private String _wolframAlphaAppID;
+
+    public WolframURLStringEncoder() {
+        this(DEFAULT_APP_ID);
+    }
+
+    public WolframURLStringEncoder(final String appId) {
+        _userInput = "";
+        _wolframAlphaAppID = appId;
+        _wolframUrl = intializeUrlWithCurrentInput();
         initializeWolframAlphaOperatorEncodings();
     }
 
-    private final void initializeUrlObject(final String inputUrl) {
-        try {
-            _urlToConvert = new URL(inputUrl);
-        } catch(final MalformedURLException e) {
-            System.out.println("URL is malformed: " + inputUrl);
-            e.printStackTrace();
-        }
+    public String formattedUrl() {
+        return _wolframUrl;
+    }
+
+    private final String intializeUrlWithCurrentInput() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(DEFAULT_BASE_URL);
+        sb.append("appid=");
+        sb.append(_wolframAlphaAppID);
+        sb.append("&");
+        sb.append("input=");
+        sb.append(_userInput);
+        sb.append(DEFAULT_URL_OUTPUT_FORMAT);
+        return sb.toString();
     }
 
     public final void initializeWolframAlphaOperatorEncodings() {
@@ -33,38 +49,67 @@ public class WolframURLStringEncoder {
         _operators.put("=", "%3D");
     }
 
-    public String convertUrl() {
-        final StringBuilder result = new StringBuilder();
-        final String urlToParse = _urlToConvert.toString();
-        final String[] urlChars = urlToParse.split("");
+    private String convertInputToCorrectFormat(final String userInput) {
+        final StringBuilder sb = new StringBuilder();
 
-        for (final String ch : urlChars) {
+        String[] chars = userInput.split("");
+        for (String ch : chars) {
             if (_operators.containsKey(ch)) {
-                result.append(_operators.get(ch));
+                sb.append(_operators.get(ch));
             } else {
-                result.append(ch);
+                sb.append(ch);
             }
         }
-        return result.toString();
+
+        return sb.toString();
     }
 
-    private boolean isLetter(final String s) {
-        return isSingleLetter(s) && Character.isLetter(s.charAt(0));
-    }
-
-    private boolean isSingleLetter(final String s) {
-        return s.length() <= 1;
-    }
-
-    public String convertOperator(final String operator) {
-        return _operators.get(operator);
+    public String updateInputInUrl(final String input) {
+        _userInput = convertInputToCorrectFormat(input);
+        _wolframUrl = intializeUrlWithCurrentInput();
+        return _wolframUrl;
     }
 
     public static void main(final String... args) {
-        final String url = "http://api.wolframalpha.com/v2/query?appid=xxx&input=(x%2B3)%2F5%3D25&format=image,plaintext";
-        WolframURLStringEncoder test = new WolframURLStringEncoder(url);
-        final String result = test.convertUrl();
-        System.out.println("result:");
-        System.out.println(result);
+        WolframURLStringEncoder test = new WolframURLStringEncoder();
+        String result, testInput;
+
+        testInput = "x=3";
+        System.out.println("testInput:" + testInput);
+        System.out.println("before   : " + test.formattedUrl());
+        test.updateInputInUrl(testInput);
+        System.out.println("after    : " + test.formattedUrl());
+        System.out.println("===============");
+        System.out.println("===============");
+        System.out.println("===============");
+        testInput = "x/3";
+        System.out.println("testInput:" + testInput);
+        System.out.println("before   : " + test.formattedUrl());
+        test.updateInputInUrl(testInput);
+        System.out.println("after    : " + test.formattedUrl());
+        System.out.println("===============");
+        System.out.println("===============");
+        System.out.println("===============");
+        testInput = "x*3";
+        System.out.println("testInput:" + testInput);
+        System.out.println("before   : " + test.formattedUrl());
+        test.updateInputInUrl(testInput);
+        System.out.println("after    : " + test.formattedUrl());
+        System.out.println("===============");
+        System.out.println("===============");
+        System.out.println("===============");
+        testInput = "x-3";
+        System.out.println("testInput:" + testInput);
+        System.out.println("before   : " + test.formattedUrl());
+        test.updateInputInUrl(testInput);
+        System.out.println("after    : " + test.formattedUrl());
+        System.out.println("===============");
+        System.out.println("===============");
+        System.out.println("===============");
+        testInput = "x+3";
+        System.out.println("testInput:" + testInput);
+        System.out.println("before   : " + test.formattedUrl());
+        test.updateInputInUrl(testInput);
+        System.out.println("after    : " + test.formattedUrl());
     }
 }
