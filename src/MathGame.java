@@ -2,6 +2,8 @@
 /*
  * MathGame.java requires no other files.
  */
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -11,10 +13,15 @@ public class MathGame {
     private static JFrame _frame;
     private GameBoard _game;
     private JTextField _txtField;
+    private JProgressBar _progressBar;
+    private int progressLevel = 0;
+    static MathGame game;
 
     public MathGame() {
         _game = new GameBoard();
         _txtField = new JTextField();
+        _progressBar = new JProgressBar(JProgressBar.VERTICAL);
+        _progressBar.setValue(progressLevel);
         addListeners();
     }
 
@@ -23,6 +30,7 @@ public class MathGame {
         _frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         _frame.add(_game);
         _frame.getContentPane().add(_txtField, BorderLayout.SOUTH);
+        _frame.getContentPane().add(_progressBar, BorderLayout.EAST);
         _frame.pack();
         _frame.setVisible(true);
     }
@@ -44,13 +52,23 @@ public class MathGame {
                         _game.incrementScore();
                         System.out.println("Correct!");
                         System.out.println(_game.currentScore());
+                        progressLevel++;
+                        _progressBar.setValue(progressLevel);
+                        _game.gameStatus.checkLevel(progressLevel);
 
                     } else {
                         System.out.println("Wrong!");
                         System.out.println(_game.currentScore());
-
+                        progressLevel--;
+                        _progressBar.setValue(progressLevel);
                     }
                     _txtField.setText("");
+                }
+
+                if(e.getKeyCode() == KeyEvent.VK_SPACE)
+                {
+                    game = new MathGame();
+                    game.start();
                 }
             }
 
@@ -67,7 +85,7 @@ public class MathGame {
     }
 
     public static void main(final String... args) {
-        MathGame game = new MathGame();
+        game = new MathGame();
         SwingUtilities.invokeLater(() -> game.start());
     }
 }
