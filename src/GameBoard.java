@@ -17,6 +17,7 @@ public class GameBoard extends JPanel {
     private int _squareW;
     private int _squareH;
     private int _speed;
+    private int _currentScore;
     private List<Equation> _equations;
     private Equation _currentEquation;
     private Timer _timer;
@@ -35,6 +36,7 @@ public class GameBoard extends JPanel {
         _equations = generateDefaultEquations();
         _currentEquation = _equations.get(generateRandomInt());
         _speed = DEFAULT_SPEED_IN_SECONDS;
+        _currentScore = 0;
         _timer = new Timer();
         _timer.schedule(new MovingTask(), 0, _speed * 1000);
     }
@@ -66,6 +68,7 @@ public class GameBoard extends JPanel {
         super.paintComponent(g);
         drawGrid(g);
         drawEquation(g, _currentEquation.getX(), _currentEquation.getY());
+        drawScore(g, 0, 0);
     }
 
     private void drawGrid(final Graphics g) {
@@ -78,7 +81,12 @@ public class GameBoard extends JPanel {
 
     private void drawEquation(final Graphics g, final int x, final int y) {
         g.setColor(Color.CYAN);
-        g.drawString(_currentEquation.getEquationAsString(), x, _boardHeight - Square.DEFAULT_HEIGHT * y - TEXT_OFFSET);
+        g.drawString(_currentEquation.getEquationAsString(), _boardWidth - Square.DEFAULT_WIDTH * x - TEXT_OFFSET, _boardHeight - Square.DEFAULT_HEIGHT * y  - TEXT_OFFSET + Square.DEFAULT_HEIGHT);
+    }
+
+    public void drawScore(final Graphics g, final int x, final int y) {
+        g.setColor(Color.CYAN);
+        g.drawString(Integer.toString(_currentScore), _boardWidth - Square.DEFAULT_WIDTH * x - TEXT_OFFSET, _boardHeight - Square.DEFAULT_HEIGHT * y - TEXT_OFFSET);
     }
 
     public void paintSquare(final int x, final int y, final Graphics canvas) {
@@ -120,6 +128,14 @@ public class GameBoard extends JPanel {
 
     public String getCurrentAnswerAsString() {
         return _currentEquation.getAnswerAsString();
+    }
+
+    public void incrementScore() {
+        _currentScore++;
+    }
+
+    public int currentScore() {
+        return _currentScore;
     }
 
     public void removeEquationFromListByIndex(final int index) {

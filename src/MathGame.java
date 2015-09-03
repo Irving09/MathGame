@@ -31,8 +31,8 @@ public class MathGame {
     private void createAndShowGUI() {
         frame = new JFrame("MathGame");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JLabel label = new JLabel("Hello World");
-        frame.getContentPane().add(label);
+//        JLabel label = new JLabel("Hello World");
+//        frame.getContentPane().add(label);
 
         //frame size
         frame.add(game);
@@ -52,7 +52,9 @@ public class MathGame {
                         // remove the equation from the game's list &&
                         // assign a new random equation from the game's list of equation
                         game.replaceCurrentEquation();
+                        game.incrementScore();
                         System.out.println("Correct!");
+                        System.out.println(game.currentScore());
                     } else {
                         System.out.println("Wrong!");
                     }

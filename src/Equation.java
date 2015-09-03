@@ -1,4 +1,6 @@
-public class Equation {
+import javax.swing.*;
+
+public class Equation extends JPanel {
     private int _y;
     private int _x;
     private String _equation;
