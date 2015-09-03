@@ -8,9 +8,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MathGame {
-
     private static final int WIDTH = 420;
     private static final int HEIGHT = 600;
     private static final int nSquarePerRow = 20;
@@ -49,10 +50,9 @@ public class MathGame {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == KeyEvent.VK_ENTER){
-                    validateInput(txtField.getText());
-                    txtField.setText("");
-
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    System.out.println(txtField.getText());
+                    txtField.setText(gb.getEquation().toString());
                 }
             }
 
@@ -63,84 +63,26 @@ public class MathGame {
         });
         txtField.setFocusable(true);
         frame.getContentPane().add(txtField, BorderLayout.SOUTH);
-
-        frame.addKeyListener(new KeyListener() {
-
-            @Override
-            public void keyPressed(KeyEvent e){
-                /* Restrict input to only integers */
-
-
-                if(e.getKeyCode() == KeyEvent.VK_ENTER){
-                    validateInput(txtField.getText());
-                    txtField.setText("");
-
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
-            }
-        });
-
-        //Display the window.
         frame.pack();
         frame.setVisible(true);
-    }
-
-    public static void main(String... args) {
-        MathGame game = new MathGame();
-        SwingUtilities.invokeLater(() -> game.start());
-    }
-
-    public static void drawSquare() {
-        for(int r = 0; r < nRow; r++)
-        {
-            for(int c=0; c < nSquarePerRow; c++)
-            {
-                int x = separate*(r) + (squareW *r)+4;
-                int y = yseparate + (squareH * c)+separate*c;
-
-
-               // drawSingleBrick(x,y);
-
-            }
-        }
     }
 
     public void validateInput(String input){
         Equation equation = gb.getEquation();
         try {
-            if(equation.getAnswer() == Integer.parseInt(input))
-            {
-
-            }
-            else
-            {
-                System.out.println("YOU LOSE");
+            if(equation.getAnswerAsInt() == Integer.parseInt(input)) {
+                System.out.println("Correct!");
+            } else {
+                System.out.println("Wrong!");
             }
         }
-        catch(Exception e)
-        {
-            System.out.println("YOU LOSE");
+        catch(Exception e) {
+            System.out.println("Wrong format");
         }
-
-
     }
-/*
-    public static void drawSingleBrick(int x, int y)
-    {
 
-        GameBoard brick =	new GameBoard();
-        Random ran = new Random(System.currentTimeMillis());
-
-        brick.setColor(ran.nextInt(5));
-        frame.add(brick);
-    }*/
+    public static void main(final String... args) {
+        MathGame game = new MathGame();
+        SwingUtilities.invokeLater(() -> game.start());
+    }
 }
