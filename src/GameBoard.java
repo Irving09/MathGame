@@ -49,21 +49,6 @@ public class GameBoard extends JPanel {
         return new Dimension(_boardWidth + 1, _boardHeight + 1);
     }
 
-    public List<Equation> generateDefaultEquations() {
-        List<Equation> equations = new ArrayList<Equation>();
-        equations.add(new Equation("0 * 0", 0));
-        equations.add(new Equation("1 * 1", 1));
-        equations.add(new Equation("2 * 2", 4));
-        equations.add(new Equation("3 * 3", 9));
-        equations.add(new Equation("4 * 4", 16));
-        equations.add(new Equation("5 * 5", 25));
-        equations.add(new Equation("6 * 6", 36));
-        equations.add(new Equation("7 * 7", 49));
-        equations.add(new Equation("8 * 8", 64));
-        equations.add(new Equation("9 * 9", 81));
-        return equations;
-    }
-
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         drawGrid(g);
@@ -123,7 +108,7 @@ public class GameBoard extends JPanel {
 
     public void drawScore(final Graphics g, final int x, final int y) {
         g.setColor(Color.CYAN);
-        g.drawString(Integer.toString(_currentScore), _boardWidth - Square.DEFAULT_WIDTH * x - TEXT_OFFSET, _boardHeight - Square.DEFAULT_HEIGHT * y - TEXT_OFFSET);
+        g.drawString(Integer.toString(_currentScore), _boardWidth / 2 - TEXT_OFFSET, _boardHeight - Square.DEFAULT_HEIGHT * y - TEXT_OFFSET);
     }
 
     public void paintSquare(final int x, final int y, final Graphics canvas) {
