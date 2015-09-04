@@ -27,10 +27,6 @@ public class WolframURLStringEncoder {
         initializeWolframAlphaOperatorEncodings();
     }
 
-    public String formattedUrl() {
-        return _wolframUrl;
-    }
-
     private final String intializeUrlWithCurrentInput() {
         final StringBuilder sb = new StringBuilder();
         sb.append(DEFAULT_BASE_URL);
@@ -43,10 +39,11 @@ public class WolframURLStringEncoder {
         return sb.toString();
     }
 
-    public final void initializeWolframAlphaOperatorEncodings() {
+    private final void initializeWolframAlphaOperatorEncodings() {
         _operators.put("+", "%2B");
         _operators.put("/", "%2F");
         _operators.put("=", "%3D");
+        _operators.put(" ", "%20");
     }
 
     private String convertInputToCorrectFormat(final String userInput) {
@@ -62,6 +59,10 @@ public class WolframURLStringEncoder {
         }
 
         return sb.toString();
+    }
+
+    public String formattedUrl() {
+        return _wolframUrl;
     }
 
     public String updateInputInUrl(final String input) {
