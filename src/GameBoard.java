@@ -2,11 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
-import java.awt.geom.AffineTransform;
 import java.util.*;
 import java.util.List;
 import java.util.Timer;
-import java.util.function.Function;
 
 public class GameBoard extends JPanel {
     private static final int DEFAULT_ROWS = 20;
@@ -92,14 +90,6 @@ public class GameBoard extends JPanel {
             layout.draw(g2, _boardWidth - Square.DEFAULT_WIDTH * 9 - TEXT_OFFSET, _boardHeight - (Square.DEFAULT_HEIGHT * gridPosition) - TEXT_OFFSET);
             gridPosition++;
         }
-
-//        int i = 0;
-//        for (final String solution : listOfSolutions) {
-//            TextLayout layout = new TextLayout(solution, font, renderContext);
-//            g2.setColor(Color.GREEN);
-//            layout.draw(g2, _boardWidth - Square.DEFAULT_WIDTH * 9 - TEXT_OFFSET, _boardHeight - (Square.DEFAULT_HEIGHT * i) - TEXT_OFFSET);
-//            i++;
-//        }
     }
 
     public void drawYourScore(Graphics g)
