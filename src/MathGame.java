@@ -106,7 +106,7 @@ public class MathGame {
             _frame.getContentPane().add(_button, BorderLayout.NORTH);
 
             _frame.revalidate();
-            //_frame.repaint();
+            _frame.repaint();
         });
     }
 
