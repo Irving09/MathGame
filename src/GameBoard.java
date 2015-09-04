@@ -14,16 +14,17 @@ public class GameBoard extends JPanel {
 
     private int _nRows;
     private int _nColumns;
-    private int _boardWidth;
-    private int _boardHeight;
+    int _boardWidth;
+    int _boardHeight;
     private int _squareW;
     private int _squareH;
     private int _speed;
     private int _currentScore;
     private Equation _currentEquation;
-    private Timer _timer;
+    Timer _timer;
     Equation _equations = new Equation();
     GameStatus gameStatus = new GameStatus();
+    ScoreBoard scoreBoard;
 
     public GameBoard() {
         this(DEFAULT_ROWS, DEFAULT_COLUMNS);
@@ -41,6 +42,12 @@ public class GameBoard extends JPanel {
         _speed = DEFAULT_SPEED_IN_SECONDS;
         _currentScore = 0;
         _timer = new Timer();
+        scheduleTimer();
+
+    }
+
+    public void scheduleTimer(){
+        _timer = new Timer();
         _timer.schedule(new MovingTask(), 0, _speed * 1000);
     }
 
@@ -57,6 +64,7 @@ public class GameBoard extends JPanel {
         if(gameStatus.HasEquationReachTheTop(_nRows)){
             drawYourScore(g);
             _timer.cancel();
+            scoreBoard.addScore(_currentScore);
         }
     }
 
