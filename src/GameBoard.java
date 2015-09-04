@@ -63,8 +63,6 @@ public class GameBoard extends JPanel {
         drawLevel(g);
         if(gameStatus.HasEquationReachTheTop(_nRows)){
             drawYourScore(g);
-            _timer.cancel();
-            scoreBoard.addScore(_currentScore);
         }
     }
 
@@ -90,12 +88,12 @@ public class GameBoard extends JPanel {
         g2.transform(transform);
         g2.setColor(Color.red);
         g2.draw(outline);
+        g2.setClip(outline);
         TextLayout textTl2 = new TextLayout("" + _currentScore, f, frc);
         Shape outline2 = textTl2.getOutline(null);
         transform.translate(_boardWidth/2, 40);
         g2.setTransform(transform);
         g2.draw(outline2);
-        g2.setClip(outline);
         g2.setClip(outline2);
     }
 
@@ -109,7 +107,7 @@ public class GameBoard extends JPanel {
 
     private void drawEquation(final Graphics g, final int x, final int y) {
         g.setColor(Color.CYAN);
-        g.drawString(_currentEquation.getEquationAsString(), _boardWidth - Square.DEFAULT_WIDTH * x - TEXT_OFFSET, _boardHeight - Square.DEFAULT_HEIGHT * y  - TEXT_OFFSET + Square.DEFAULT_HEIGHT);
+        g.drawString(_currentEquation.getEquationAsString(), _boardWidth - Square.DEFAULT_WIDTH * x - TEXT_OFFSET, _boardHeight - Square.DEFAULT_HEIGHT * y - TEXT_OFFSET + Square.DEFAULT_HEIGHT);
     }
 
     public void drawScore(final Graphics g, final int x, final int y) {
@@ -131,12 +129,12 @@ public class GameBoard extends JPanel {
         square.paintSquare(canvas);
     }
 
-    public String getCurrentAnswerAsString() {
+    public String [] getCurrentAnswerAsString() {
         return _currentEquation.getAnswerAsString();
     }
 
     public void incrementScore() {
-        _currentScore++;
+        _currentScore = _currentScore + (gameStatus.getLvl() * (_nRows - _currentEquation.getY()));
     }
 
     public int currentScore() {
@@ -167,6 +165,12 @@ public class GameBoard extends JPanel {
     class MovingTask extends TimerTask {
         public void run() {
             _currentEquation.moveUp();
+            if(gameStatus.HasEquationReachTheTop(_nRows)){
+                scoreBoard.addScore(_currentScore);
+                _timer.cancel();
+
+
+            }
             repaint();
         }
     }

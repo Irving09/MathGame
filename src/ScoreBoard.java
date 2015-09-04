@@ -9,12 +9,12 @@ import java.util.List;
 
 public class ScoreBoard extends JPanel{
 
-    private GameBoard gameBoard;
+    public GameBoard gameBoard;
     private List<Integer> scores;
     int x = 50;
     int y = 200;
 
-    public ScoreBoard(GameBoard gameBoard)
+    public ScoreBoard()
     {
         this.gameBoard = gameBoard;
         scores = new ArrayList();
@@ -24,7 +24,6 @@ public class ScoreBoard extends JPanel{
         scores.add(4);
         scores.add(6);
         scores.add(2);
-
     }
 
     public void sortScore()
@@ -42,6 +41,9 @@ public class ScoreBoard extends JPanel{
         drawHighScoreTitle(g);
         drawScore(g);
 
+    }
+    public void paint(Graphics g ) {
+        super.paint(g);
     }
 
     public void clear(Graphics g)
