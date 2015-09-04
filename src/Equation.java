@@ -26,11 +26,11 @@ public class Equation extends JPanel {
     public Equation generateEquation(int lvl) {
         switch (lvl)
         {
-           /* case 1: addition();break;
+            case 1: addition();break;
             case 2: subtraction();break;
             case 3: multiplication();break;
             case 4: division();break;
-            case 5: mix();break;*/
+            case 5: mix();break;
             default: quadratic();break;
         }
         reset();
