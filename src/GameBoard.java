@@ -183,7 +183,7 @@ public class GameBoard extends JPanel {
 
     class MovingTask extends TimerTask {
         public void run() {
-            _currentEquation.moveUp(_speed + (2 * gameStatus.getLvl()));
+            _currentEquation.moveUp((_speed + (2 * gameStatus.getLvl())) / 3);
             try {
                 if(!scoreBoard.hasScoreAdded && !gameStatus.isAlive()){
                     scoreBoard.addScore(_currentScore);
