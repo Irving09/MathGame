@@ -80,23 +80,17 @@ public class GameBoard extends JPanel {
 
         FontRenderContext frc = g2.getFontRenderContext();
         Font f = new Font("Helvetica", 1, 40);
-        String s = new String("YOU SCORE: ");
+        String s = new String("YOUR SCORE: ");
         TextLayout textTl = new TextLayout(s, f, frc);
-        Shape outline = textTl.getOutline(null);
-        Rectangle outlineBounds = outline.getBounds();
-        AffineTransform transform = g2.getTransform();
-        transform.translate(_boardWidth / 2 - (outlineBounds.width / 2), _boardHeight / 2
-                + (outlineBounds.height / 2));
-        g2.transform(transform);
+
         g2.setColor(Color.red);
-        g2.draw(outline);
-        //g2.setClip(outline);
+        textTl.draw(g2, 100, 200);
+
         TextLayout textTl2 = new TextLayout("" + _currentScore, f, frc);
-        Shape outline2 = textTl2.getOutline(null);
-        transform.translate(_boardWidth/2, 40);
-        g2.setTransform(transform);
-        g2.draw(outline2);
-        g2.setClip(outline2);
+
+
+        textTl2.draw(g2, 150, 250);
+
     }
 
     private void drawGrid(final Graphics g) {
