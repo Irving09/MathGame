@@ -28,12 +28,14 @@ public class GameStatus  {
     {
         return alive;
     }
-    public void checkLevel(int i)
+    public boolean checkLevel(int i)
     {
         if(i % 5 == 0)
         {
             lvl = i / 5 + 1;
+            return true;
         }
+        return false;
     }
 
     public int getLvl()

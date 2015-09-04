@@ -68,6 +68,15 @@ public class GameBoard extends JPanel {
         }
     }
 
+    public void setGameSpeed(final int speed) {
+        _speed = speed;
+    }
+
+    public void increaseSpeed() {
+        _speed /= 2;
+        scheduleTimer();
+    }
+
     public void drawSolution(final Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
