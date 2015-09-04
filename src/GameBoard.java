@@ -4,7 +4,9 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.util.*;
+import java.util.List;
 import java.util.Timer;
+import java.util.function.Function;
 
 public class GameBoard extends JPanel {
     private static final int DEFAULT_ROWS = 20;
@@ -63,8 +65,33 @@ public class GameBoard extends JPanel {
         drawLevel(g);
         if(gameStatus.HasEquationReachTheTop(_nRows)){
             drawYourScore(g);
+            drawSolution(g);
             _timer.cancel();
+        }
+    }
 
+    public void drawSolution(final Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+
+        g2.setRenderingHint(RenderingHints.KEY_RENDERING,
+                RenderingHints.VALUE_RENDER_QUALITY);
+
+        FontRenderContext renderContext = g2.getFontRenderContext();
+        Font font = new Font("Helvetica", 1, 40);
+
+        final WolframApiResponseXML api = new WolframApiResponseXML();
+        final List<String> listOfSolutions = api.getSolutionFromWolfram(_currentEquation.getEquationAsString());
+
+//        TextLayout layout;
+//        Shape outline;
+        int i = 0;
+        for (final String solution : listOfSolutions) {
+//            layout = new TextLayout(solution, font, renderContext);
+//            outline = layout.getOutline(null);
+            g2.drawString(solution, _boardWidth - Square.DEFAULT_WIDTH * 5 - TEXT_OFFSET, _boardHeight - Square.DEFAULT_HEIGHT * i - TEXT_OFFSET + Square.DEFAULT_HEIGHT);
+            i++;
         }
     }
 
@@ -93,7 +120,7 @@ public class GameBoard extends JPanel {
         //g2.setClip(outline);
         TextLayout textTl2 = new TextLayout("" + _currentScore, f, frc);
         Shape outline2 = textTl2.getOutline(null);
-        transform.translate(_boardWidth/2, 40);
+        transform.translate(_boardWidth / 2, 40);
         g2.setTransform(transform);
         g2.draw(outline2);
         g2.setClip(outline2);
