@@ -83,15 +83,23 @@ public class GameBoard extends JPanel {
 
         final WolframApiResponseXML api = new WolframApiResponseXML();
         final List<String> listOfSolutions = api.getSolutionFromWolfram(_currentEquation.getEquationAsString());
-        System.out.println(listOfSolutions.size());
-        System.out.println(listOfSolutions);
-        int i = 0;
-        for (final String solution : listOfSolutions) {
+        String solution;
+        int gridPosition = 0;
+        for (int i = listOfSolutions.size() - 1; i >= 0; i--) {
+            solution = listOfSolutions.get(i);
             TextLayout layout = new TextLayout(solution, font, renderContext);
             g2.setColor(Color.GREEN);
-            layout.draw(g2, _boardWidth - Square.DEFAULT_WIDTH * 9 - TEXT_OFFSET, _boardHeight - (Square.DEFAULT_HEIGHT * i) - TEXT_OFFSET);
-            i++;
+            layout.draw(g2, _boardWidth - Square.DEFAULT_WIDTH * 9 - TEXT_OFFSET, _boardHeight - (Square.DEFAULT_HEIGHT * gridPosition) - TEXT_OFFSET);
+            gridPosition++;
         }
+
+//        int i = 0;
+//        for (final String solution : listOfSolutions) {
+//            TextLayout layout = new TextLayout(solution, font, renderContext);
+//            g2.setColor(Color.GREEN);
+//            layout.draw(g2, _boardWidth - Square.DEFAULT_WIDTH * 9 - TEXT_OFFSET, _boardHeight - (Square.DEFAULT_HEIGHT * i) - TEXT_OFFSET);
+//            i++;
+//        }
     }
 
     public void drawYourScore(Graphics g)
