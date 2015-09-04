@@ -48,7 +48,7 @@ public class GameBoard extends JPanel {
 
     public void scheduleTimer(){
         _timer = new Timer();
-        _timer.schedule(new MovingTask(), 0, _speed * 1000);
+        _timer.schedule(new MovingTask(), 0, _speed * 100);
     }
 
     public Dimension getPreferredSize() {
@@ -61,7 +61,7 @@ public class GameBoard extends JPanel {
         drawEquation(g, _currentEquation.getX(), _currentEquation.getY());
         drawScore(g, 0, 0);
         drawLevel(g);
-        if(gameStatus.HasEquationReachTheTop(_nRows)){
+        if(gameStatus.HasEquationReachTheTop(_boardHeight)){
             drawYourScore(g);
             drawSolution(g);
             _timer.cancel();
@@ -124,7 +124,7 @@ public class GameBoard extends JPanel {
 
     private void drawEquation(final Graphics g, final int x, final int y) {
         g.setColor(Color.CYAN);
-        g.drawString(_currentEquation.getEquationAsString(), _boardWidth - Square.DEFAULT_WIDTH * x - TEXT_OFFSET, _boardHeight - Square.DEFAULT_HEIGHT * y - TEXT_OFFSET + Square.DEFAULT_HEIGHT);
+        g.drawString(_currentEquation.getEquationAsString(), _boardWidth - Square.DEFAULT_WIDTH * x - TEXT_OFFSET, _boardHeight - y);
     }
 
     public void drawScore(final Graphics g, final int x, final int y) {

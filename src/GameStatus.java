@@ -18,10 +18,10 @@ public class GameStatus  {
         _currentEquation = equation;
     }
 
-    public boolean HasEquationReachTheTop(int row)
+    public boolean HasEquationReachTheTop(final int boardHeight)
     {
-        alive = _currentEquation.getY() < row;
-        return _currentEquation.getY() >= row;
+        alive = _currentEquation.getY() < boardHeight;
+        return !alive;
     }
 
     public boolean isAlive()
