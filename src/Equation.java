@@ -26,11 +26,11 @@ public class Equation extends JPanel {
     public Equation generateEquation(int lvl) {
         switch (lvl)
         {
-           /* case 1: addition();break;
+            case 1: addition();break;
             case 2: subtraction();break;
             case 3: multiplication();break;
             case 4: division();break;
-            case 5: mix();break;*/
+            case 5: mix();break;
             default: quadratic();break;
         }
         reset();
@@ -90,13 +90,13 @@ public class Equation extends JPanel {
 
     public void quadratic() {
         int a = ran.nextInt(9) + 1;
-        int b = ran.nextInt(39) + 1;
-        int c = 1;
+        int b = ran.nextInt(399) + 1;
+        int c = ran.nextInt(9) + 1;
         while(b * b != 4 * a * c)
         {
             a = ran.nextInt(9) + 1;
-            b = ran.nextInt(39) + 1;
-            c = 1;
+            b = ran.nextInt(399) + 1;
+            c = ran.nextInt(9) + 1;
         }
         _equation = "x^2 + " + b + "x" + " + " + c + " = " + ((a*a) + (b * a) + c);
         _answer = a;
