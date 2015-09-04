@@ -160,7 +160,7 @@ public class GameBoard extends JPanel {
     }
 
     public void incrementScore() {
-        _currentScore = _currentScore + (gameStatus.getLvl() * (_nRows - _currentEquation.getY()));
+        _currentScore = _currentScore + (gameStatus.getLvl() * (_currentEquation.getY()));
     }
 
     public int currentScore() {
