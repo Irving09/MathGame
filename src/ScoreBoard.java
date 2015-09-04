@@ -13,7 +13,7 @@ public class ScoreBoard extends JPanel{
     private List<Integer> scores;
     int x = 50;
     int y = 200;
-
+    public boolean hasScoreAdded = false;
     public ScoreBoard()
     {
         this.gameBoard = gameBoard;
@@ -91,5 +91,6 @@ public class ScoreBoard extends JPanel{
     public void addScore(int s)
     {
         scores.add(s);
+        hasScoreAdded = true;
     }
 }

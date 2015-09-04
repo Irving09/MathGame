@@ -80,6 +80,7 @@ public class MathGame {
 
                 if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                     game = new MathGame();
+                    _scoreBoard.hasScoreAdded = false;
                     game.start();
                 }
             }

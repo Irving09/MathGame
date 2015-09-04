@@ -63,6 +63,8 @@ public class GameBoard extends JPanel {
         drawLevel(g);
         if(gameStatus.HasEquationReachTheTop(_nRows)){
             drawYourScore(g);
+            _timer.cancel();
+
         }
     }
 
@@ -88,7 +90,7 @@ public class GameBoard extends JPanel {
         g2.transform(transform);
         g2.setColor(Color.red);
         g2.draw(outline);
-        g2.setClip(outline);
+        //g2.setClip(outline);
         TextLayout textTl2 = new TextLayout("" + _currentScore, f, frc);
         Shape outline2 = textTl2.getOutline(null);
         transform.translate(_boardWidth/2, 40);
@@ -165,12 +167,12 @@ public class GameBoard extends JPanel {
     class MovingTask extends TimerTask {
         public void run() {
             _currentEquation.moveUp();
-            if(gameStatus.HasEquationReachTheTop(_nRows)){
-                scoreBoard.addScore(_currentScore);
-                _timer.cancel();
+            try {
+                if(!scoreBoard.hasScoreAdded && !gameStatus.isAlive()){
+                    scoreBoard.addScore(_currentScore);
+                }
+            }catch(Exception err){}
 
-
-            }
             repaint();
         }
     }

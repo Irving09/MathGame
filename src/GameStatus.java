@@ -2,7 +2,7 @@
 public class GameStatus  {
     private Equation _currentEquation;
     private int lvl = 1;
-    private boolean alive;
+    private boolean alive = true;
 
     public GameStatus()
     {
