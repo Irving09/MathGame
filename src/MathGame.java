@@ -4,6 +4,7 @@
  */
 
 
+import javax.smartcardio.Card;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -14,23 +15,35 @@ public class MathGame {
     private GameBoard _game;
     private JTextField _txtField;
     private JProgressBar _progressBar;
+    private JButton _button;
     private int progressLevel = 0;
     static MathGame game;
+    private static ScoreBoard _scoreBoard = new ScoreBoard();
+    private JPanel _cards;
 
     public MathGame() {
         _game = new GameBoard();
         _txtField = new JTextField();
         _progressBar = new JProgressBar(JProgressBar.VERTICAL);
         _progressBar.setValue(progressLevel);
+        _button = new JButton("ScoreBoard");
+        _button.setActionCommand("score");
+        _scoreBoard.gameBoard = _game;
+        _game.scoreBoard = _scoreBoard;
+        _cards = new JPanel(new CardLayout());
+        _cards.add(_game, "game");
+        _cards.add(_scoreBoard, "scoreBoard");
         addListeners();
     }
 
     public void start() {
         _frame = new JFrame("MathGame");
         _frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        _frame.add(_game);
-        _frame.getContentPane().add(_txtField, BorderLayout.SOUTH);
+        _frame.add(_cards);
+
         _frame.getContentPane().add(_progressBar, BorderLayout.EAST);
+        _frame.getContentPane().add(_button, BorderLayout.NORTH);
+        _frame.getContentPane().add(_txtField, BorderLayout.SOUTH);
         _frame.pack();
         _frame.setVisible(true);
     }
@@ -48,8 +61,8 @@ public class MathGame {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     boolean isCorrect = validateInput(_txtField.getText().trim());
                     if (isCorrect) {
-                        _game.replaceCurrentEquation();
                         _game.incrementScore();
+                        _game.replaceCurrentEquation();
                         System.out.println("Correct!");
                         System.out.println(_game.currentScore());
                         progressLevel++;
@@ -65,8 +78,7 @@ public class MathGame {
                     _txtField.setText("");
                 }
 
-                if(e.getKeyCode() == KeyEvent.VK_SPACE)
-                {
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                     game = new MathGame();
                     game.start();
                 }
@@ -78,10 +90,29 @@ public class MathGame {
             }
         });
         _txtField.setFocusable(true);
+        _button.addActionListener(e -> {
+
+            CardLayout cl = (CardLayout)(_cards.getLayout());
+            if(_button.getText().equals("ScoreBoard")){
+                _game._timer.cancel();
+                cl.show(_cards, "scoreBoard");
+                _button.setText("Resume");
+            }
+            else
+            {
+                cl.show(_cards, "game");
+                _button.setText("ScoreBoard");
+                _game.scheduleTimer();
+            }
+            _frame.getContentPane().add(_button, BorderLayout.NORTH);
+
+            _frame.revalidate();
+            _frame.repaint();
+        });
     }
 
     public boolean validateInput(final String input){
-        return _game.getCurrentAnswerAsString().equals(input);
+        return _game.getCurrentAnswerAsString()[0].equals(input) || _game.getCurrentAnswerAsString()[1].equals(input);
     }
 
     public static void main(final String... args) {

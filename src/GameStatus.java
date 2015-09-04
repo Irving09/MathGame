@@ -2,6 +2,7 @@
 public class GameStatus  {
     private Equation _currentEquation;
     private int lvl = 1;
+    private boolean alive;
 
     public GameStatus()
     {
@@ -19,9 +20,14 @@ public class GameStatus  {
 
     public boolean HasEquationReachTheTop(int row)
     {
+        alive = _currentEquation.getY() < row;
         return _currentEquation.getY() >= row;
     }
 
+    public boolean isAlive()
+    {
+        return alive;
+    }
     public void checkLevel(int i)
     {
         if(i % 5 == 0)
