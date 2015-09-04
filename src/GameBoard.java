@@ -48,7 +48,7 @@ public class GameBoard extends JPanel {
 
     public void scheduleTimer(){
         _timer = new Timer();
-        _timer.schedule(new MovingTask(), 0, _speed * 100);
+        _timer.schedule(new MovingTask(), 0, 100);
     }
 
     public Dimension getPreferredSize() {
@@ -68,14 +68,7 @@ public class GameBoard extends JPanel {
         }
     }
 
-    public void setGameSpeed(final int speed) {
-        _speed = speed;
-    }
 
-    public void increaseSpeed() {
-        _speed /= 2;
-        scheduleTimer();
-    }
 
     public void drawSolution(final Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
@@ -190,7 +183,7 @@ public class GameBoard extends JPanel {
 
     class MovingTask extends TimerTask {
         public void run() {
-            _currentEquation.moveUp();
+            _currentEquation.moveUp(_speed + (2 * gameStatus.getLvl()));
             try {
                 if(!scoreBoard.hasScoreAdded && !gameStatus.isAlive()){
                     scoreBoard.addScore(_currentScore);

@@ -68,10 +68,7 @@ public class MathGame {
                         progressLevel++;
                         _progressBar.setValue(progressLevel);
                         boolean isLeveledUp = _game.gameStatus.checkLevel(progressLevel);
-                        if (isLeveledUp) {
-                            // increase speed here
-                            _game.increaseSpeed();
-                        }
+
 
                     } else {
                         System.out.println("Wrong!");

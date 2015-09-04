@@ -30,8 +30,8 @@ public class Equation extends JPanel {
             case 2: subtraction();break;
             case 3: multiplication();break;
             case 4: division();break;
-            case 5: mix();break;
-            default: quadratic();break;
+            default: mix();break;
+           // default: quadratic();break;
         }
         reset();
         return this;
@@ -127,6 +127,10 @@ public class Equation extends JPanel {
 
     public int getX() {
         return _x;
+    }
+
+    public void moveUp(int s) {
+        _y = _y + s;
     }
 
     public void moveUp() {
