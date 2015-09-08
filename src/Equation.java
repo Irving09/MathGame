@@ -30,6 +30,7 @@ public class Equation extends JPanel {
             case 2: subtraction();break;
             case 3: multiplication();break;
             case 4: division();break;
+            case 5: quadratic(); break;
             default: mix();break;
            // default: quadratic();break;
         }
@@ -41,8 +42,10 @@ public class Equation extends JPanel {
     {
         switch (ran.nextInt(4))
         {
-            case 0:  addition();break;
-            case 1: subtraction();break;
+            case 0:
+                addition();break;
+            case 1:
+                subtraction();break;
             case 2: multiplication();break;
             default: division();break;
         }

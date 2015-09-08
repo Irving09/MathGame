@@ -10,7 +10,7 @@ public class GameBoard extends JPanel {
     private static final int DEFAULT_ROWS = 20;
     private static final int DEFAULT_COLUMNS = 10;
     private static final int TEXT_OFFSET = 10;
-    private static final int DEFAULT_SPEED_IN_SECONDS = 1;
+    private static final int DEFAULT_SPEED_IN_SECONDS = 20;
 
     private int _nRows;
     private int _nColumns;
@@ -67,8 +67,6 @@ public class GameBoard extends JPanel {
             _timer.cancel();
         }
     }
-
-
 
     public void drawSolution(final Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
