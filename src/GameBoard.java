@@ -18,10 +18,8 @@ public class GameBoard extends JPanel {
     int _boardHeight;
     private int _squareW;
     private int _squareH;
-    private int _speed;
-    private int _currentScore;
-    private Equation _currentEquation;
-    Timer _timer;
+    public int _currentScore;
+    public Equation _currentEquation;
     Equation _equations = new Equation();
     GameStatus gameStatus = new GameStatus();
     ScoreBoard scoreBoard;
@@ -39,17 +37,12 @@ public class GameBoard extends JPanel {
         _boardHeight = _nRows * _squareH;
         _currentEquation = _equations.generateEquation(gameStatus.getLvl());
         gameStatus = new GameStatus(_currentEquation);
-        _speed = DEFAULT_SPEED_IN_SECONDS;
+
         _currentScore = 0;
-        _timer = new Timer();
-        scheduleTimer();
 
     }
 
-    public void scheduleTimer(){
-        _timer = new Timer();
-        _timer.schedule(new MovingTask(), 0, 100);
-    }
+
 
     public Dimension getPreferredSize() {
         return new Dimension(_boardWidth + 1, _boardHeight + 1);
@@ -64,7 +57,6 @@ public class GameBoard extends JPanel {
         if(gameStatus.HasEquationReachTheTop(_boardHeight)){
             drawYourScore(g);
             drawSolution(g);
-            _timer.cancel();
         }
     }
 
@@ -198,16 +190,5 @@ public class GameBoard extends JPanel {
         return sb.toString();
     }
 
-    class MovingTask extends TimerTask {
-        public void run() {
-            _currentEquation.moveUp((_speed + (2 * gameStatus.getLvl())) / 3);
-            try {
-                if(!scoreBoard.hasScoreAdded && !gameStatus.isAlive()){
-                    scoreBoard.addScore(_currentScore);
-                }
-            }catch(Exception err){}
 
-            repaint();
-        }
-    }
 }

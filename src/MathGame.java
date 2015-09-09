@@ -7,12 +7,9 @@
 import javax.smartcardio.Card;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
-public class MathGame {
+public class MathGame implements ActionListener {
     private static JFrame _frame;
     private GameBoard _game;
     private JTextField _txtField;
@@ -22,8 +19,10 @@ public class MathGame {
     static MathGame game;
     private static ScoreBoard _scoreBoard = new ScoreBoard();
     private JPanel _cards;
+    Timer timer;
+    int speed = 40;
 
-    public MathGame() {
+    public MathGame()  {
         _game = new GameBoard();
         _txtField = new JTextField();
         _progressBar = new JProgressBar(JProgressBar.VERTICAL);
@@ -35,6 +34,7 @@ public class MathGame {
         _cards = new JPanel(new CardLayout());
         _cards.add(_game, "game");
         _cards.add(_scoreBoard, "scoreBoard");
+        timer = new Timer(speed, this);
 
     }
 
@@ -49,6 +49,8 @@ public class MathGame {
         addListeners();
         _frame.pack();
         _frame.setVisible(true);
+        timer.setInitialDelay(2000);
+        timer.start();
     }
 
     private void addListeners() {
@@ -84,6 +86,9 @@ public class MathGame {
                 }
 
                 if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+
+                    timer.stop();
+                    increaseSpeed(_game.gameStatus.getLvl());
                     game = new MathGame();
                     _scoreBoard.hasScoreAdded = false;
                     game.start();
@@ -98,17 +103,15 @@ public class MathGame {
         _txtField.setFocusable(true);
         _button.addActionListener(e -> {
 
-            CardLayout cl = (CardLayout)(_cards.getLayout());
-            if(_button.getText().equals("ScoreBoard")){
-                _game._timer.cancel();
+            CardLayout cl = (CardLayout) (_cards.getLayout());
+            if (_button.getText().equals("ScoreBoard")) {
+                timer.stop();
                 cl.show(_cards, "scoreBoard");
                 _button.setText("Resume");
-            }
-            else
-            {
+            } else {
                 cl.show(_cards, "game");
                 _button.setText("ScoreBoard");
-                _game.scheduleTimer();
+                timer.start();
             }
             _frame.getContentPane().add(_button, BorderLayout.NORTH);
 
@@ -126,6 +129,29 @@ public class MathGame {
         });
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        _game._currentEquation.moveUp();
+        increaseSpeed(_game.gameStatus.getLvl());
+        try {
+            if(!_game.scoreBoard.hasScoreAdded && !_game.gameStatus.isAlive()){
+                _game.scoreBoard.addScore(_game._currentScore);
+            }
+        }catch(Exception err){}
+
+        _game._equations.moveUp();
+        _game.repaint();
+    }
+
+    public void increaseSpeed(int lvl)
+    {
+        speed = 40 - (lvl * 10);
+        if(speed< 1)
+        {
+            speed = 1;
+        }
+        timer.setDelay(speed);
+    }
     public boolean validateInput(final String input){
         return _game.getCurrentAnswerAsString()[0].equals(input) || _game.getCurrentAnswerAsString()[1].equals(input);
     }
