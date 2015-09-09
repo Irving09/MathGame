@@ -123,7 +123,22 @@ public class GameBoard extends JPanel {
     }
 
     private void drawEquation(final Graphics g, final int x, final int y) {
-        g.setColor(Color.CYAN);
+        switch(_currentEquation.questionType()) {
+            case 0:
+                g.setColor(Color.CYAN);
+                break;
+            case 1:
+                g.setColor(Color.WHITE);
+                break;
+            case 2:
+                g.setColor(Color.YELLOW);
+                break;
+            case 3:
+                g.setColor(Color.PINK);
+                break;
+            default:
+                g.setColor(Color.CYAN);
+        }
         g.drawString(_currentEquation.getEquationAsString(), _boardWidth - Square.DEFAULT_WIDTH * x - TEXT_OFFSET, _boardHeight - y);
     }
 
@@ -146,7 +161,7 @@ public class GameBoard extends JPanel {
         square.paintSquare(canvas);
     }
 
-    public String [] getCurrentAnswerAsString() {
+    public String[] getCurrentAnswerAsString() {
         return _currentEquation.getAnswerAsString();
     }
 

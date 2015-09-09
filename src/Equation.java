@@ -8,6 +8,7 @@ public class Equation extends JPanel {
     private int _answer;
     private int _answer2;
     private Random ran;
+    private int _questionType;
     public Equation() {
         ran = new Random(System.currentTimeMillis());
     }
@@ -17,10 +18,15 @@ public class Equation extends JPanel {
         _answer2 = answer;
         _y = 0;
         _x = 5;
+        _questionType = 0;
     }
 
     public String getEquationAsString() {
         return _equation;
+    }
+
+    public int questionType() {
+        return _questionType;
     }
 
     public Equation generateEquation(int lvl) {
@@ -30,8 +36,8 @@ public class Equation extends JPanel {
             case 2: subtraction();break;
             case 3: multiplication();break;
             case 4: division();break;
-            case 5: quadratic(); break;
-            default: mix();break;
+            case 5: mix(); break;
+            default: quadratic();break;
            // default: quadratic();break;
         }
         reset();
@@ -56,6 +62,7 @@ public class Equation extends JPanel {
         _answer = a *  b;
         _answer2 = _answer;
         _equation = a + " * " + b + " = x";
+        _questionType = 2;
 
     }
 
@@ -65,6 +72,7 @@ public class Equation extends JPanel {
         _answer = a +  b;
         _answer2 = _answer;
         _equation = a + " + " + b + " = x";
+        _questionType = 0;
 
     }
 
@@ -74,6 +82,7 @@ public class Equation extends JPanel {
         _answer = a -  b;
         _answer2 = _answer;
         _equation = a + " - " + b + " = x";
+        _questionType = 1;
 
     }
 
@@ -88,7 +97,7 @@ public class Equation extends JPanel {
         _answer = a /  b;
         _answer2 = _answer;
         _equation = a + " / " + b + " = x";
-
+        _questionType = 3;
     }
 
     public void quadratic() {
@@ -108,6 +117,7 @@ public class Equation extends JPanel {
         {
             _answer2 = (ran.nextInt(99) + 1) * -1;
         }
+        _questionType = 4;
     }
 
     public int getAnswerAsInt() {
