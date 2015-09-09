@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class MathGame {
     private static JFrame _frame;
@@ -44,6 +46,7 @@ public class MathGame {
         _frame.getContentPane().add(_progressBar, BorderLayout.EAST);
         _frame.getContentPane().add(_button, BorderLayout.NORTH);
         _frame.getContentPane().add(_txtField, BorderLayout.SOUTH);
+        addListeners();
         _frame.pack();
         _frame.setVisible(true);
     }
@@ -110,6 +113,15 @@ public class MathGame {
 
             _frame.revalidate();
             _frame.repaint();
+        });
+
+        _txtField.setFocusable(true);
+
+        _frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                _txtField.requestFocusInWindow();
+            }
         });
     }
 
