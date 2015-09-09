@@ -75,6 +75,7 @@ public class MathGame {
 
                     } else {
                         System.out.println("Wrong!");
+                        _game.penalize();
                         System.out.println(_game.currentScore());
                         progressLevel--;
                         _progressBar.setValue(progressLevel);

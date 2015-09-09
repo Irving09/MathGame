@@ -173,6 +173,10 @@ public class GameBoard extends JPanel {
         return _currentScore;
     }
 
+    public void penalize() {
+        _currentScore /= 2;
+    }
+
     public void replaceCurrentEquation() {
         _currentEquation = _equations.generateEquation(gameStatus.getLvl());
         gameStatus.setEquation(_currentEquation);
