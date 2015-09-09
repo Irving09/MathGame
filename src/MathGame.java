@@ -35,7 +35,7 @@ public class MathGame {
         _cards = new JPanel(new CardLayout());
         _cards.add(_game, "game");
         _cards.add(_scoreBoard, "scoreBoard");
-        addListeners();
+
     }
 
     public void start() {
