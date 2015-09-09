@@ -20,7 +20,7 @@ public class MathGame implements ActionListener {
     private static ScoreBoard _scoreBoard = new ScoreBoard();
     private JPanel _cards;
     Timer timer;
-    int speed = 40;
+    int speed = 60;
 
     public MathGame()  {
         _game = new GameBoard();
@@ -145,7 +145,7 @@ public class MathGame implements ActionListener {
 
     public void increaseSpeed(int lvl)
     {
-        speed = 40 - (lvl * 10);
+        speed = 60 - (lvl * 8);
         if(speed< 1)
         {
             speed = 1;
